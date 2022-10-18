@@ -13,13 +13,16 @@ export const Feedback = ({
   return (
     <>
       <Section title="Please leave feedback">
-        <FeedbackOption onLeaveFeedback={countFeedback} options={options} />
+        <FeedbackOption
+          onLeaveFeedback={countFeedback}
+          options={options}
+        />
       </Section>
       <Section title="Statistics">
         {total ? (
           <Statistics
             total={total}
-            options={options}
+            options={ options }
             positivePercentage={countPositiveFeedbackPercentage}
           />
         ) : (

@@ -1,32 +1,36 @@
-import { Component } from 'react';
+import { useState } from 'react';
+
 import { Feedback } from './Feedback';
 
-export class App extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  };
+const INITIAL_FEEDBACK = {
+  good: 0,
+  neutral: 0,
+  bad: 0,
+};
 
-  countFeedback = e => {
-    this.setState(prevState => {
-      const keys = Object.keys(prevState);
-      const element = keys.filter(key => key === e.target.name);
-      return {
-        [e.target.name]: prevState[element] + 1,
-      };
-    });
+export const App = () => {
+  const [feedback, setFeedback] = useState(INITIAL_FEEDBACK);
+  
+  const countFeedback = (e) => {
+    
+    setFeedback(prevState => ({
+      ...prevState,
+      [e.target.name]: Number.parseInt(prevState[e.target.name]) + 1,
+    }));
   };
+  
 
-  countTotalFeedback = () => {
-    const { good, neutral, bad } = this.state;
+  const countTotalFeedback = () => {
+    
+    const { good, neutral, bad } = feedback;
     let total = 0;
+    
     total = good + neutral + bad;
     return total;
   };
 
-  countPositiveFeedbackPercentage = () => {
-    const { good, neutral, bad } = this.state;
+  const countPositiveFeedbackPercentage = () => {
+    const { good, neutral, bad } = feedback;
     let positive = 0;
     positive = Math.round((good / (good + neutral + bad)) * 100)
       ? Math.round((good / (good + neutral + bad)) * 100)
@@ -34,17 +38,21 @@ export class App extends Component {
     return positive;
   };
 
-  render() {
-    const total = this.countTotalFeedback();
-    return (
-      <>
-        <Feedback
-          options={this.state}
-          countFeedback={this.countFeedback}
-          total={total}
-          countPositiveFeedbackPercentage={this.countPositiveFeedbackPercentage}
-        />
-      </>
-    );
-  }
-}
+  const total = countTotalFeedback();
+  
+  return (
+    <>
+      <Feedback
+        options={{
+          good: feedback.good,
+          neutral: feedback.neutral,
+          bad: feedback.bad,
+        }}
+        
+        countFeedback={countFeedback}
+        total={total}
+        countPositiveFeedbackPercentage={countPositiveFeedbackPercentage}
+      />
+    </>
+  );
+};

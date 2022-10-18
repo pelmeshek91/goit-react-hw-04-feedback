@@ -2,10 +2,11 @@ import PropTypes from 'prop-types';
 import s from './Statistics.module.css';
 
 export const Statistics = ({
-  options: { good, neutral, bad },
+  options,
   total,
   positivePercentage,
 }) => {
+  const { good, neutral, bad } = options;
   return (
     <>
       <ul className={s.statisticsList}>
@@ -26,7 +27,7 @@ Statistics.propTypes = {
     good: PropTypes.number,
     neutral: PropTypes.number,
     bad: PropTypes.number,
-  }),
+  }).isRequired,
   total: PropTypes.number,
   positivePercentage: PropTypes.func,
 };

@@ -1,23 +1,23 @@
 import PropTypes from 'prop-types';
 import s from './FeedbackOptions.module.css';
 export const FeedbackOption = ({ options, onLeaveFeedback }) => {
-  const opt = Object.keys(options);
-
+  
   return (
+
     <>
-      {opt.map(key => {
+      {Object.keys(options).map(key => {
         return (
-          <button
-            className={s.btn}
-            name={key}
-            key={key}
-            type="button"
-            onClick={onLeaveFeedback}
-          >
+        <button
+          className={s.btn}
+          name={key}
+          key={key}
+          type="button"
+          onClick={onLeaveFeedback}
+        >
             {key[0].toUpperCase() + key.slice(1)}
-          </button>
-        );
+      </button>)
       })}
+      
     </>
   );
 };
