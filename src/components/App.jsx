@@ -8,21 +8,23 @@ export const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
-  const [language, setLanguage] = useState('en');
 
   const optionsBtn = [
     { name: 'good', title: { en: 'Good', ua: 'Добре' } },
     { name: 'neutral', title: { en: 'Neutral', ua: 'Задовільно' } },
     { name: 'bad', title: { en: 'Bad', ua: 'Погано' } },
   ];
+
   const countFeedback = name => {
     switch (name) {
       case 'good':
         setGood(prevGood => prevGood + 1);
         break;
+
       case 'neutral':
         setNeutral(prevNeutral => prevNeutral + 1);
         break;
+
       case 'bad':
         setBad(prevBad => prevBad + 1);
         break;
@@ -37,6 +39,7 @@ export const App = () => {
     total = good + neutral + bad;
     return total;
   };
+
   const countPositiveFeedbackPercentage = () => {
     let pers = Math.round((good / countTotalFeedback()) * 100);
     let res = pers ? pers : 0;
@@ -49,11 +52,7 @@ export const App = () => {
   return (
     <>
       <Section title="Please leave feedback">
-        <FeedbackOptions
-          onLeaveFeedback={countFeedback}
-          options={optionsBtn}
-          lang={language}
-        />
+        <FeedbackOptions onLeaveFeedback={countFeedback} options={optionsBtn} />
       </Section>
       <Section title="Statistics">
         {total ? (

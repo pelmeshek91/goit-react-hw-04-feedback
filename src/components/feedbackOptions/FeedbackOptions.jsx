@@ -1,7 +1,7 @@
 import s from './FeedbackOptions.module.css';
 import PropTypes from 'prop-types';
 
-export const FeedbackOptions = ({ onLeaveFeedback, options, lang }) => {
+export const FeedbackOptions = ({ onLeaveFeedback, options }) => {
   return (
     <div className={s.btnWrap}>
       {options.map(({ name, title }) => {
@@ -11,7 +11,7 @@ export const FeedbackOptions = ({ onLeaveFeedback, options, lang }) => {
             key={name}
             className={s.btn}
           >
-            {title[lang]}
+            {title}
           </button>
         );
       })}
