@@ -5,45 +5,23 @@ import { Notification } from 'components/notification/Notification';
 import { Statistics } from './statistics/Statistics';
 
 export const App = () => {
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
-
-  const optionsBtn = [
-    { name: 'good', title: { en: 'Good', ua: 'Добре' } },
-    { name: 'neutral', title: { en: 'Neutral', ua: 'Задовільно' } },
-    { name: 'bad', title: { en: 'Bad', ua: 'Погано' } },
-  ];
+  const [state, setState] = useState({ good: 0, neutral: 0, bad: 0 });
 
   const countFeedback = name => {
-    switch (name) {
-      case 'good':
-        setGood(prevGood => prevGood + 1);
-        break;
-
-      case 'neutral':
-        setNeutral(prevNeutral => prevNeutral + 1);
-        break;
-
-      case 'bad':
-        setBad(prevBad => prevBad + 1);
-        break;
-
-      default:
-        break;
-    }
+    setState({
+      ...state,
+      [name]: state[name] + 1,
+    });
   };
 
   const countTotalFeedback = () => {
-    let total = 0;
-    total = good + neutral + bad;
-    return total;
+    const { good, neutral, bad } = state;
+    return good + neutral + bad;
   };
 
   const countPositiveFeedbackPercentage = () => {
-    let pers = Math.round((good / countTotalFeedback()) * 100);
-    let res = pers ? pers : 0;
-    return res;
+    let pers = Math.round((state.good / countTotalFeedback()) * 100);
+    return pers ? pers : 0;
   };
 
   const total = countTotalFeedback();
@@ -52,14 +30,14 @@ export const App = () => {
   return (
     <>
       <Section title="Please leave feedback">
-        <FeedbackOptions onLeaveFeedback={countFeedback} options={optionsBtn} />
+        <FeedbackOptions onLeaveFeedback={countFeedback} options={state} />
       </Section>
       <Section title="Statistics">
         {total ? (
           <Statistics
             countTotalFeedback={total}
             PositiveFeedback={pers}
-            options={{ good, neutral, bad }}
+            options={state}
           />
         ) : (
           <Notification message="There is no feedback" />
